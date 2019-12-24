@@ -3,18 +3,43 @@ package api
 
 import (
 	"EasyTransThem/pages"
+	"EasyTransThem/settings"
 	"io"
 	"log"
 	"net/http"
+	"os"
 )
 
 func UploadFile(w http.ResponseWriter, r *http.Request) {
 	logRequestUrl(r)
 	if r.Method == "POST" {
-		//TODO
+		check := func(w http.ResponseWriter, err error) {
+			if err != nil {
+				w.WriteHeader(500)
+				io.WriteString(w, "<h1>500 Internal Server Error</h1>")
+				log.Println("[ERROR]", err.Error())
+			}
+		}
+
+		file, headers, err := r.FormFile("file")
+		check(w, err)
+
+		localFile, err := os.Create(settings.FilesPath + headers.Filename)
+		check(w, err)
+
+		defer func() {
+			if localFile != nil {
+				localFile.Close()
+			}
+		}()
+
+		_, err = io.Copy(localFile, file)
+		check(w, err)
+
+		io.WriteString(w, "Upload Success!")
 	} else {
 		w.WriteHeader(400)
-		_, _ = io.WriteString(w, "400 Bad Request: POST ONLY.")
+		io.WriteString(w, "<h1>400 Bad Request: POST ONLY.</h1>")
 	}
 }
 
@@ -24,7 +49,7 @@ func DeleteFile(w http.ResponseWriter, r *http.Request) {
 		//TODO
 	} else {
 		w.WriteHeader(400)
-		_, _ = io.WriteString(w, "400 Bad Request: GET ONLY.")
+		io.WriteString(w, "<h1>400 Bad Request: GET ONLY.</h1>")
 	}
 }
 
@@ -34,14 +59,13 @@ func Pages(w http.ResponseWriter, r *http.Request) {
 	}
 	switch r.URL.Path {
 	case "/":
-		_, _ = io.WriteString(w, pages.PageIndex)
-	case "/favicon.ico":
-		//TODO
+		io.WriteString(w, pages.PageIndex)
 	default:
-		_, _ = io.WriteString(w, pages.PageNotFound)
+		w.WriteHeader(404)
+		io.WriteString(w, pages.PageNotFound)
 	}
 }
 
 func logRequestUrl(r *http.Request) {
-	log.Printf("[Request]From:"+ r.RemoteAddr +" URL:" + r.URL.Path)
+	log.Printf("[Request]From:" + r.RemoteAddr + " URL:" + r.URL.Path)
 }
