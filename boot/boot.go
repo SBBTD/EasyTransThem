@@ -37,7 +37,7 @@ func init() {
 	}
 
 	err := os.MkdirAll(settings.FilesPath, os.ModePerm)
-	if err!=nil{
+	if err != nil {
 		log.Fatalln("[ERROR]Mkdir \"files\" Failed.")
 	}
 
