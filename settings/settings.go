@@ -6,6 +6,6 @@ var (
 	FilesPath   string
 	ServerPort  uint   = 9569
 	AppName     string = "EasyTransThem"
-	Version     string = "v0.0.0"
-	VersionCode uint   = 0
+	Version     string = "v0.1.0"
+	VersionCode uint   = 1
 )
