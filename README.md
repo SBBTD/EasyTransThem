@@ -6,6 +6,20 @@ EasyTransThem是一个基于GO的跨平台文件服务器（类网盘），适�
 
 ##### 演示
 
+```
+Usage:
+  -h    Show this help.
+  -p    Server port for listening. (default 9569)
+  -v    Show version information.
+```
+
+```
+用法：
+  -h    显示帮助
+  -p    端口号（默认9569）
+  -v    显示版本信息
+```
+
 主界面：
 
 ![1](image/1.png)
