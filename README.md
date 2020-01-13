@@ -4,6 +4,22 @@ EasyTransThem是一个基于GO的跨平台文件服务器（类网盘），适�
 
 客户端筹备中，实现自动同步和更稳定的传输。
 
+##### 演示
+
+主界面：
+
+![1](image/1.png)
+
+上传进度条：
+
+![2](image/2.png)
+
+##### 类图
+
+![class](image/class.gif)
+
+
+
 TODO:
 
 - [ ] 完成readme
