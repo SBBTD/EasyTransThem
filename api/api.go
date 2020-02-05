@@ -37,6 +37,7 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 		check(w, err)
 
 		io.WriteString(w, "Upload Success!")
+		log.Println("[Upload]" + r.RemoteAddr + " " + headers.Filename)
 	} else {
 		responseHttpErrorAndPrintLog(w, http.StatusBadRequest, nil)
 	}
